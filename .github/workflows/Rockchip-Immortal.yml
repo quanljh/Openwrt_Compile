@@ -12,7 +12,7 @@ permissions: write-all
 
 jobs:
   wrt_config:
-    uses: ./.github/workflows/WRT-CORE.yml
+    uses: ./.github/workflows/CORE.yml
     with:
       Target: Rockchip
       RepositoryURL: https://github.com/immortalwrt/immortalwrt.git

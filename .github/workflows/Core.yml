@@ -1,4 +1,4 @@
-name: WRT-CORE
+name: CORE
 
 on:
   workflow_call:
@@ -186,4 +186,3 @@ jobs:
             SourceCode: ${{env.WRT_SOURCE}}
             Target: ${{env.WRT_TARGET}}
             Ip: ${{env.WRT_IP}}
-            Password: ${{env.WRT_PW}}
