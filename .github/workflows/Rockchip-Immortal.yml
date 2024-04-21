@@ -14,8 +14,8 @@ jobs:
   wrt_config:
     uses: ./.github/workflows/Core.yml
     with:
-      Target: Rockchip
-      RepositoryURL: https://github.com/immortalwrt/immortalwrt.git
-      Branch: openwrt-23.05
-      IP: 192.168.2.1
-      Password: ${{ github.event.inputs.password }}
+      WRT_TARGET: Rockchip
+      WRT_URL: https://github.com/immortalwrt/immortalwrt.git
+      WRT_BRANCH: openwrt-23.05
+      WRT_IP: 192.168.2.1
+      WRT_PASSWORD: ${{ github.event.inputs.password }}
