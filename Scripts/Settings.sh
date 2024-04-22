@@ -1,8 +1,9 @@
 #!/bin/bash
 
-STARTUP_SCRIPT="./Configs/999-custom-startup.sh"
+STARTUP_SCRIPT="$$GITHUB_WORKSPACE/Configs/999-custom-startup.sh"
+UCI_DEFAULTS_SCRIPT="./files/etc/uci-defaults/999-custom-startup.sh"
 
-sed -i "s/lan_ip_address=".*"/lan_ip_address="$WRT_IP"/g" $STARTUP_SCRIPT
-sed -i "s/root_password=".*"/root_password="$WRT_PASSWORD"/g" $STARTUP_SCRIPT
+cp -rf $STARTUP_SCRIPT $UCI_DEFAULTS_SCRIPT
 
-cp -rf $STARTUP_SCRIPT ./wrt/files/etc/uci-defaults
+sed -i "s/lan_ip_address=".*"/lan_ip_address="$WRT_IP"/g" $UCI_DEFAULTS_SCRIPT
+sed -i "s/root_password=".*"/root_password="$WRT_PASSWORD"/g" $UCI_DEFAULTS_SCRIPT
