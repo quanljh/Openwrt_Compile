@@ -135,7 +135,7 @@ jobs:
 
           rm -rf ./tmp* ./.config*
 
-          cat $GITHUB_WORKSPACE/Config/Config.txt >> .config
+          cat $GITHUB_WORKSPACE/Configs/Config.txt >> .config
 
           $GITHUB_WORKSPACE/Scripts/Settings.sh
 
