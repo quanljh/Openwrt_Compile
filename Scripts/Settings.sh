@@ -1,7 +1,7 @@
 #!/bin/bash
 
-STARTUP_SCRIPT="$$GITHUB_WORKSPACE/Configs/999-custom-startup.sh"
-UCI_DEFAULTS_SCRIPT="./files/etc/uci-defaults/999-custom-startup.sh"
+STARTUP_SCRIPT=$GITHUB_WORKSPACE/Configs/999-custom-startup.sh
+UCI_DEFAULTS_SCRIPT=./files/etc/uci-defaults/999-custom-startup.sh
 
 cp -rf $STARTUP_SCRIPT $UCI_DEFAULTS_SCRIPT
 
