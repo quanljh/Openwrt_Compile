@@ -11,6 +11,10 @@ on:
         description: "Optional specific commit to check out"
         required: false
         default: ""
+      wrt_verbose:
+        description: "Enable verbose output"
+        required: false
+        default: "false"
 
 permissions: write-all
 
@@ -24,3 +28,4 @@ jobs:
       WRT_IP: 192.168.2.1
       WRT_PASSWORD: ${{ github.event.inputs.password }}
       WRT_COMMIT: ${{ github.event.inputs.wrt_commit }}
+      WRT_VERBOSE: ${{ github.event.inputs.wrt_verbose }}

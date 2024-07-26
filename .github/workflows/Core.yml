@@ -21,6 +21,9 @@ on:
       WRT_COMMIT:
         required: false
         type: string
+      WRT_VERBOSE:
+        required: false
+        type: string
 
 env:
   GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
@@ -162,8 +165,11 @@ jobs:
       - name: Compile Firmware
         run: |
           cd ./wrt/
-
-          make -j$(nproc) || make -j1 V=s
+          if [ "${{env.WRT_VERBOSE}}" == "true" ]; then
+            make -j$(nproc) V=s || make -j1 V=s
+          else
+            make -j$(nproc) || make -j1 V=s
+          fi
 
       - name: Machine Information
         run: |
