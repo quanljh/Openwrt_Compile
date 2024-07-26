@@ -7,6 +7,10 @@ on:
         description: "Password"
         required: true
         default: ""
+      wrt_commit:
+        description: "Optional specific commit to check out"
+        required: false
+        default: ""
 
 permissions: write-all
 
@@ -19,3 +23,4 @@ jobs:
       WRT_BRANCH: openwrt-23.05
       WRT_IP: 192.168.2.1
       WRT_PASSWORD: ${{ github.event.inputs.password }}
+      WRT_COMMIT: ${{ github.event.inputs.wrt_commit }}

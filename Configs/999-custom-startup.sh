@@ -1,14 +1,15 @@
+#!/bin/bash
+
 # Beware! This script will be in /rom/etc/uci-defaults/ as part of the image.
 # Uncomment lines to apply:
 #
 # wlan_name="ImmortalWrt"
 # wlan_password="12345678"
 #
-root_password=""
-lan_ip_address=""
-#
-# pppoe_username=""
-# pppoe_password=""
+# Source environment variables
+if [ -f /etc/uci-defaults/999-custom-env ]; then
+  . /etc/uci-defaults/999-custom-env
+fi
 
 # log potential errors
 exec >/tmp/setup.log 2>&1
@@ -26,7 +27,7 @@ fi
 
 # Configure WLAN
 # More options: https://openwrt.org/docs/guide-user/network/wifi/basic#wi-fi_interfaces
-if [ -n "$wlan_name" -a -n "$wlan_password" -a ${#wlan_password} -ge 8 ]; then
+if [ -n "$wlan_name" ] && [ -n "$wlan_password" ] && [ ${#wlan_password} -ge 8 ]; then
   uci set wireless.@wifi-device[0].disabled='0'
   uci set wireless.@wifi-iface[0].disabled='0'
   uci set wireless.@wifi-iface[0].encryption='psk2'
@@ -37,7 +38,7 @@ fi
 
 # Configure PPPoE
 # More options: https://openwrt.org/docs/guide-user/network/wan/wan_interface_protocols#protocol_pppoe_ppp_over_ethernet
-if [ -n "$pppoe_username" -a "$pppoe_password" ]; then
+if [ -n "$pppoe_username" ] && [ -n "$pppoe_password" ]; then
   uci set network.wan.proto=pppoe
   uci set network.wan.username="$pppoe_username"
   uci set network.wan.password="$pppoe_password"

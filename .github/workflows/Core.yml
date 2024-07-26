@@ -18,6 +18,9 @@ on:
       WRT_PASSWORD:
         required: true
         type: string
+      WRT_COMMIT:
+        required: false
+        type: string
 
 env:
   GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
@@ -80,7 +83,15 @@ jobs:
 
       - name: Clone Code
         run: |
-          git clone --depth=1 --single-branch --branch $WRT_BRANCH $WRT_URL ./wrt/
+          if [ -z "${{env.WRT_COMMIT}}" ]; then
+            git clone --depth=1 --single-branch --branch $WRT_BRANCH $WRT_URL ./wrt/
+          else
+            git init ./wrt/
+            cd ./wrt/
+            git remote add origin $WRT_URL
+            git fetch --depth 1 origin ${{env.WRT_COMMIT}}
+            git checkout ${{env.WRT_COMMIT}}
+          fi
 
           cd ./wrt/ && echo "WRT_HASH=$(git log -1 --pretty=format:'%h')" >> $GITHUB_ENV
 
