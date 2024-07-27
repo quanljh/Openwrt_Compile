@@ -20,9 +20,16 @@ permissions: write-all
 
 jobs:
   wrt_config:
+    name: ${{matrix.TARGET}}
+    strategy:
+      fail-fast: false
+      #max-parallel: 3
+      matrix:
+        TARGET: [ROCKCHIP, X86]
+
     uses: ./.github/workflows/Core.yml
     with:
-      WRT_TARGET: Rockchip
+      WRT_TARGET: ${{matrix.TARGET}}
       WRT_URL: https://github.com/immortalwrt/immortalwrt.git
       WRT_BRANCH: openwrt-23.05
       WRT_IP: 192.168.2.1
