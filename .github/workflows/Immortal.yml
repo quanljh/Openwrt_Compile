@@ -25,7 +25,7 @@ jobs:
       fail-fast: false
       #max-parallel: 3
       matrix:
-        TARGET: [ROCKCHIP, X86]
+        TARGET: [Rockchip, x86]
 
     uses: ./.github/workflows/Core.yml
     with:
