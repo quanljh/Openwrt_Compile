@@ -86,16 +86,16 @@ jobs:
         run: |
           if [ -z "${{env.WRT_COMMIT}}" ]; then
             git clone --depth=1 --single-branch --branch $WRT_BRANCH $WRT_URL ./wrt/
-            cd ./wrt/ && echo "WRT_HASH=$(git log -1 --pretty=format:'%h')" >> $GITHUB_ENV
+            cd ./wrt/
           else
             git init ./wrt/
             cd ./wrt/
             git remote add origin $WRT_URL
             git fetch --depth 1 origin ${{env.WRT_COMMIT}}
             git checkout ${{env.WRT_COMMIT}}
-            echo "WRT_HASH=$(git log -1 --pretty=format:'%h')" >> $GITHUB_ENV
           fi
-
+          export WRT_HASH=$(git log -1 --pretty=format:'%h')
+          echo "WRT_HASH=$WRT_HASH" >> $GITHUB_ENV
           echo "WRT_SOURCE=$WRT_SOURCE-$WRT_HASH" >> $GITHUB_ENV
 
       - name: Check Scripts
