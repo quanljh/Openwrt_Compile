@@ -17,7 +17,7 @@ UPDATE_PACKAGE() {
 	fi
 }
 
-#UPDATE_PACKAGE "luci-app-passwall" "xiaorouji/openwrt-passwall" "master"
+UPDATE_PACKAGE "luci-app-passwall" "xiaorouji/openwrt-passwall" "master"
 
 UPDATE_VERSION() {
 	local PKG_NAME=$1
