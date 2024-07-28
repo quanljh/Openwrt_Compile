@@ -139,7 +139,7 @@ jobs:
 
       - name: Custom Packages
         run: |
-          cd ./wrt/package/
+          cd ./wrt/feeds/
 
           $GITHUB_WORKSPACE/Scripts/Packages.sh
 
