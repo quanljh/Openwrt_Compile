@@ -18,6 +18,8 @@ UPDATE_PACKAGE() {
 	mv -f $REPO_NAME/$PKG_NAME $PKG_PATH
 
 	rm -rf $REPO_NAME
+
+	echo "Package $PKG_NAME is updated."
 }
 
 
