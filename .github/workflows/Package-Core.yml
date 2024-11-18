@@ -90,34 +90,6 @@ jobs:
         run: |
           find ./ -maxdepth 2 -type f -iregex ".*\(txt\|sh\)$" -exec dos2unix {} \; -exec chmod +x {} \;
 
-      - name: Check Caches
-        id: check-cache
-        uses: actions/cache@main
-        with:
-          key: ${{env.WRT_TARGET}}-${{env.WRT_SOURCE}}-${{env.WRT_HASH}}
-          path: |
-            ./wrt/.ccache
-            ./wrt/staging_dir/host*
-            ./wrt/staging_dir/tool*
-
-      - name: Update Caches
-        run: |
-          if ${{steps.check-cache.outputs.cache-hit == 'true'}}; then
-            sed -i 's/ $(tool.*\/stamp-compile)//g' ./wrt/Makefile
-            sed -i 's/ $(tool.*\/stamp-install)//g' ./wrt/Makefile
-
-            echo "toolchain skiped done!"
-          else
-            gh extension install actions/gh-actions-cache
-
-            CACHE_LIST=$(gh actions-cache list --key "$WRT_TARGET-$WRT_SOURCE" | cut -f 1)
-            for CACHE_KEY in $CACHE_LIST; do
-               gh actions-cache delete $CACHE_KEY --confirm
-            done
-
-            echo "caches cleanup done!"
-          fi
-
       - name: Update Feeds
         run: |
           cd ./wrt/
@@ -147,6 +119,8 @@ jobs:
         run: |
           cd ./wrt/
 
+          make toolchain/install -j$(nproc) V=s
+          make target/linux/{clean,compile} V=s
           make package/feeds/luci/luci-app-passwall/download -j$(nproc) V=s
           make package/feeds/luci/luci-app-passwall/compile -j$(nproc) V=s
 
