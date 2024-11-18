@@ -1,0 +1,27 @@
+name: Immortal-Package
+
+on:
+  workflow_dispatch:
+    inputs:
+      wrt_commit:
+        description: "Optional specific commit to check out"
+        required: false
+        default: ""
+
+permissions: write-all
+
+jobs:
+  wrt_config:
+    name: ${{matrix.TARGET}}
+    strategy:
+      fail-fast: false
+      #max-parallel: 3
+      matrix:
+        TARGET: [x86]
+
+    uses: ./.github/workflows/Package-Core.yml
+    with:
+      WRT_TARGET: ${{matrix.TARGET}}
+      WRT_URL: https://github.com/immortalwrt/immortalwrt.git
+      WRT_BRANCH: openwrt-23.05
+      WRT_COMMIT: ${{ github.event.inputs.wrt_commit }}
