@@ -121,14 +121,14 @@ jobs:
             if [ "${{env.WRT_VERBOSE}}" == "true" ]; then
               make toolchain/install -j$(nproc) V=s 
               make target/linux/{clean,compile} V=s
-            else
+            fi
             make toolchain/install -j$(nproc)
             make target/linux/{clean,compile}
           fi
           
           if [ "${{env.WRT_VERBOSE}}" == "true" ]; then
             make package/feeds/luci/luci-app-passwall/compile -j$(nproc) V=s
-          else
+          fi
           make package/feeds/luci/luci-app-passwall/compile -j$(nproc)
 
       - name: Save build cache
