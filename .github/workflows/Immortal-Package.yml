@@ -7,6 +7,10 @@ on:
         description: "Optional specific commit to check out"
         required: false
         default: ""
+      wrt_verbose:
+        description: "Enable verbose output"
+        required: false
+        default: "false"
 
 permissions: write-all
 
@@ -25,3 +29,4 @@ jobs:
       WRT_URL: https://github.com/immortalwrt/immortalwrt.git
       WRT_BRANCH: openwrt-23.05
       WRT_COMMIT: ${{ github.event.inputs.wrt_commit }}
+      WRT_VERBOSE: ${{ github.event.inputs.wrt_verbose }}

@@ -15,6 +15,9 @@ on:
       WRT_COMMIT:
         required: false
         type: string
+      WRT_VERBOSE:
+        required: false
+        type: string
 
 env:
   GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
@@ -22,6 +25,7 @@ env:
   WRT_URL: ${{inputs.WRT_URL}}
   WRT_BRANCH: ${{inputs.WRT_BRANCH}}
   WRT_COMMIT: ${{inputs.WRT_COMMIT}}
+  WRT_VERBOSE: ${{inputs.WRT_VERBOSE}}
 
 jobs:
   wrt_core:
@@ -114,11 +118,18 @@ jobs:
           cd ./wrt/
 
           if [ "${{steps.restore-cache.outputs.cache-hit}}" != 'true' ]; then
-            make toolchain/install -j$(nproc) V=s
-            make target/linux/{clean,compile} V=s
+            if [ "${{env.WRT_VERBOSE}}" == "true" ]; then
+              make toolchain/install -j$(nproc) V=s 
+              make target/linux/{clean,compile} V=s
+            else
+            make toolchain/install -j$(nproc)
+            make target/linux/{clean,compile}
           fi
           
-          make package/feeds/luci/luci-app-passwall/compile -j$(nproc) V=s
+          if [ "${{env.WRT_VERBOSE}}" == "true" ]; then
+            make package/feeds/luci/luci-app-passwall/compile -j$(nproc) V=s
+          else
+          make package/feeds/luci/luci-app-passwall/compile -j$(nproc)
 
       - name: Save build cache
         uses: actions/cache@main
