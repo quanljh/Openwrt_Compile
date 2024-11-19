@@ -38,16 +38,6 @@ jobs:
           remove_haskell: true
           remove_tool_cache: true
           remove_swap: true
-          remove_packages: "android* azure* clang* dotnet* firefox* ghc* golang* google* libclang* libgl1* lld* llvm* \
-            microsoft* mongodb* mono* mysql* nodejs* openjdk* php* postgresql* powershell* snap* temurin* yarn* zulu*"
-          remove_packages_one_command: true
-          remove_folders:
-            "/etc/apt/sources.list.d* /etc/mono* /etc/mysql* /usr/include/linux/android* /usr/lib/llvm* /usr/lib/mono* \
-            /usr/local/lib/android* /usr/local/lib/node_modules* /usr/local/share/chromium* /usr/local/share/powershell* \
-            /usr/local/share/vcpkg/ports/azure* /usr/local/share/vcpkg/ports/google* /usr/local/share/vcpkg/ports/libpq/android* \
-            /usr/local/share/vcpkg/ports/llvm* /usr/local/share/vcpkg/ports/mysql* /usr/local/share/vcpkg/ports/snap* \
-            /usr/share/azure* /usr/share/dotnet* /usr/share/glade* /usr/share/miniconda* /usr/share/php* /usr/share/swift \
-            /var/lib/mysql* /var/log/azure*"
           testing: false
 
       - name: Initialization Environment
@@ -67,7 +57,7 @@ jobs:
 
       - name: Initialization Values
         run: |
-          export WRT_SOURCE=$(echo $WRT_URL | cut -d '/' -f 5-)
+          export WRT_SOURCE=$(echo $WRT_URL | cut -d '/' -f 4-)
           echo "WRT_SOURCE=$WRT_SOURCE" >> $GITHUB_ENV
 
       - name: Clone Code
@@ -97,32 +87,46 @@ jobs:
           ./scripts/feeds update -a
           ./scripts/feeds install -a
 
+      - name: Update configs
+        run: |   
+          cd ./wrt/
+          rm -rf .config
+          cat $GITHUB_WORKSPACE/Configs/$WRT_TARGET.txt >> .config
+          make defconfig
+
       - name: Custom Packages
         run: |
           cd ./wrt/feeds/
 
           $GITHUB_WORKSPACE/Scripts/Packages.sh
 
-      - name: Custom Settings
-        run: |
-          cd ./wrt/
-
-          rm -rf ./tmp* ./.config*
-
-          cat $GITHUB_WORKSPACE/Configs/$WRT_TARGET.txt $GITHUB_WORKSPACE/Configs/Common.txt >> .config
-
-          $GITHUB_WORKSPACE/Scripts/Settings.sh
-
-          make defconfig
+      - name: Restore cache
+        id: restore-cache
+        uses: actions/cache@main
+        with:
+          key: build-${{env.WRT_SOURCE}}-${{env.WRT_HASH}}
+          path: |
+            ./wrt/build_dir/toolchain
+            ./wrt/staging_dir/target
 
       - name: Compile Packages
         run: |
           cd ./wrt/
 
-          make toolchain/install -j$(nproc) V=s
-          make target/linux/{clean,compile} V=s
-          make package/feeds/luci/luci-app-passwall/download -j$(nproc) V=s
+          if [ "${{steps.restore-cache.outputs.cache-hit}}" != 'true' ]; then
+            make toolchain/install -j$(nproc) V=s
+            make target/linux/{clean,compile} V=s
+          fi
+          
           make package/feeds/luci/luci-app-passwall/compile -j$(nproc) V=s
+
+      - name: Save build cache
+        uses: actions/cache@main
+        with:
+          path: |
+            ./wrt/build_dir/toolchain
+            ./wrt/staging_dir/target
+          key: build-${{env.WRT_SOURCE}}-${{env.WRT_HASH}}
 
       - name: Machine Information
         run: |
@@ -144,16 +148,13 @@ jobs:
 
           for FILE in $(find ./bin/packages/ -type f -iname "*passwall*.*") ; do
             echo $(basename $FILE)
-            EXT=$(basename $FILE | cut -d '.' -f 2-)
-            NAME=$(basename $FILE | cut -d '.' -f 1 | grep -io "\($WRT_TARGET\).*")
-            NEW_FILE="$WRT_SOURCE"_"$NAME"."$EXT"
-            mv -f $FILE ./upload/$NEW_FILE
+            mv -f $FILE ./upload/
           done
 
       - name: Release Firmware
         uses: softprops/action-gh-release@master
         with:
-          tag_name: ${{env.WRT_TARGET}}_${{env.WRT_SOURCE}}
+          tag_name: Packages_${{env.WRT_TARGET}}_${{env.WRT_SOURCE}}
           files: ./wrt/upload/*.*
           body: |
             SourceCode: ${{env.WRT_SOURCE}}
