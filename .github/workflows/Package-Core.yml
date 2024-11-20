@@ -169,24 +169,6 @@ jobs:
 
           cp -rf ./.config ./upload/Config_"$WRT_TARGET"_"$WRT_SOURCE".txt
 
-          for dir in $(find ./bin -type d); do
-            echo "Contents of $dir:"
-            ls -l "$dir"
-            echo "--------------------------------"
-          done
-
-          for dir in $(find ./build_dir -type d); do
-            echo "Contents of $dir:"
-            ls -l "$dir"
-            echo "--------------------------------"
-          done
-
-          for dir in $(find ./staging_dir -type d); do
-            echo "Contents of $dir:"
-            ls -l "$dir"
-            echo "--------------------------------"
-          done
-
           for FILE in $(find ./bin/packages/ -type f -iname "*passwall*"); do
             echo $(basename $FILE)
             mv -f $FILE ./upload/
