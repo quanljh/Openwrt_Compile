@@ -131,6 +131,17 @@ jobs:
           fi
           make package/feeds/luci/luci-app-passwall/compile -j$(nproc)
 
+      - name: Delete other build caches
+        if: steps.restore-cache.outputs.cache-hit != 'true'
+        run: |
+          gh api -X GET /repos/${{github.repository}}/actions/caches | jq -r '.actions_caches[] | select(.key | startswith("build-")) | .id' > cache_ids.txt
+          for cache_id in $(cat cache_ids.txt); do
+            echo "Deleting cache ID: $cache_id"
+            gh api -X DELETE /repos/${{github.repository}}/actions/caches/$cache_id
+          done
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Save build cache
         if: steps.restore-cache.outputs.cache-hit != 'true' # Only save if cache was not restored
         uses: actions/cache/save@v4
@@ -158,7 +169,13 @@ jobs:
 
           cp -rf ./.config ./upload/Config_"$WRT_TARGET"_"$WRT_SOURCE".txt
 
-          for FILE in $(find ./bin/ -type f -iname "*passwall*") ; do
+          for dir in $(find ./bin/packages -type d); do
+            echo "Contents of $dir:"
+            ls -l "$dir"
+            echo "--------------------------------"
+          done
+
+          for FILE in $(find ./bin/packages/ -type f -iname "*passwall*"); do
             echo $(basename $FILE)
             mv -f $FILE ./upload/
           done
