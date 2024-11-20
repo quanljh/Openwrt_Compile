@@ -126,6 +126,7 @@ jobs:
             make target/linux/{clean,compile}
           fi
           
+          make package/feeds/luci/luci-app-passwall/download
           if [ "${{env.WRT_VERBOSE}}" == "true" ]; then
             make package/feeds/luci/luci-app-passwall/compile -j$(nproc) V=s
           fi
