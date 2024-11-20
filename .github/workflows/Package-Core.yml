@@ -95,7 +95,7 @@ jobs:
         run: |   
           cd ./wrt/
           rm -rf .config
-          cat $GITHUB_WORKSPACE/Configs/$WRT_TARGET.txt >> .config
+          cat $GITHUB_WORKSPACE/Configs/$WRT_TARGET.txt $GITHUB_WORKSPACE/Configs/Packages.txt >> .config
           make defconfig
 
       - name: Custom Packages
@@ -187,7 +187,7 @@ jobs:
             echo "--------------------------------"
           done
 
-          for FILE in $(find ./build_dir/ -type f -iname "*passwall*"); do
+          for FILE in $(find ./bin/packages/ -type f -iname "*passwall*"); do
             echo $(basename $FILE)
             mv -f $FILE ./upload/
           done
