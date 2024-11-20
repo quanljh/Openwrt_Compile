@@ -61,7 +61,7 @@ jobs:
 
       - name: Initialization Values
         run: |
-          export WRT_SOURCE=$(echo $WRT_URL | cut -d '/' -f 4-)
+          export WRT_SOURCE=$(echo $WRT_URL | cut -d '/' -f 5-)
           echo "WRT_SOURCE=$WRT_SOURCE" >> $GITHUB_ENV
 
       - name: Clone Code
@@ -108,7 +108,7 @@ jobs:
         id: restore-cache
         uses: actions/cache@main
         with:
-          key: build-${{env.WRT_SOURCE}}-${{env.WRT_HASH}}
+          key: build-${{env.WRT_SOURCE}}
           path: |
             ./wrt/build_dir/toolchain
             ./wrt/staging_dir/target
@@ -137,7 +137,7 @@ jobs:
           path: |
             ./wrt/build_dir/toolchain
             ./wrt/staging_dir/target
-          key: build-${{env.WRT_SOURCE}}-${{env.WRT_HASH}}
+          key: build-${{env.WRT_SOURCE}}
 
       - name: Machine Information
         run: |
