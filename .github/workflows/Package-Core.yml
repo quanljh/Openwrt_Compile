@@ -132,6 +132,7 @@ jobs:
           make package/feeds/luci/luci-app-passwall/compile -j$(nproc)
 
       - name: Save build cache
+        if: steps.restore-cache.outputs.cache-hit != 'true' # Only save if cache was not restored
         uses: actions/cache/save@v4
         with:
           path: |
