@@ -110,8 +110,8 @@ jobs:
         with:
           key: build-${{env.WRT_SOURCE}}
           path: |
-            ./wrt/build_dir/toolchain
-            ./wrt/staging_dir/target
+            ./wrt/build_dir
+            ./wrt/staging_dir
 
       - name: Compile Packages
         run: |
@@ -135,8 +135,8 @@ jobs:
         uses: actions/cache/save@v4
         with:
           path: |
-            ./wrt/build_dir/toolchain
-            ./wrt/staging_dir/target
+            ./wrt/build_dir
+            ./wrt/staging_dir
           key: build-${{env.WRT_SOURCE}}
 
       - name: Machine Information
