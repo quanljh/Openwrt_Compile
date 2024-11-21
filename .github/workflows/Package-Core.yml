@@ -102,7 +102,9 @@ jobs:
           cd ./wrt/
           rm -rf .config
           cat $GITHUB_WORKSPACE/Configs/$WRT_TARGET.txt $GITHUB_WORKSPACE/Configs/Packages.txt >> .config
+          cat .config
           make defconfig
+          cat .config
 
       - name: Restore cache
         id: restore-cache
