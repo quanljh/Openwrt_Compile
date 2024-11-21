@@ -100,11 +100,8 @@ jobs:
       - name: Update configs
         run: |   
           cd ./wrt/
-          rm -rf .config
-          cat $GITHUB_WORKSPACE/Configs/$WRT_TARGET.txt $GITHUB_WORKSPACE/Configs/Packages.txt >> .config
-          cat .config
+          cat $GITHUB_WORKSPACE/Configs/$WRT_TARGET.txt <(echo "") $GITHUB_WORKSPACE/Configs/Packages.txt >> .config
           make defconfig
-          cat .config
 
       - name: Restore cache
         id: restore-cache
@@ -171,8 +168,6 @@ jobs:
           cd ./wrt/ && mkdir ./upload/
 
           cp -rf ./.config ./upload/Config_"$WRT_TARGET"_"$WRT_SOURCE".txt
-
-          ls -l ./bin/packages/x86_64/luci/
 
           for FILE in $(find ./bin/packages/ -type f -iname "*passwall*"); do
             echo $(basename $FILE)

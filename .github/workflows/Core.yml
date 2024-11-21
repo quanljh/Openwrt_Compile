@@ -149,7 +149,7 @@ jobs:
 
           rm -rf ./tmp* ./.config*
 
-          cat $GITHUB_WORKSPACE/Configs/$WRT_TARGET.txt $GITHUB_WORKSPACE/Configs/Common.txt >> .config
+          cat $GITHUB_WORKSPACE/Configs/$WRT_TARGET.txt <(echo "") $GITHUB_WORKSPACE/Configs/Common.txt >> .config
 
           $GITHUB_WORKSPACE/Scripts/Settings.sh
 
