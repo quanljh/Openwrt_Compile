@@ -91,18 +91,18 @@ jobs:
           ./scripts/feeds update -a
           ./scripts/feeds install -a
 
+      - name: Custom Packages
+        run: |
+          cd ./wrt/feeds/
+
+          $GITHUB_WORKSPACE/Scripts/Packages.sh
+
       - name: Update configs
         run: |   
           cd ./wrt/
           rm -rf .config
           cat $GITHUB_WORKSPACE/Configs/$WRT_TARGET.txt $GITHUB_WORKSPACE/Configs/Packages.txt >> .config
           make defconfig
-
-      - name: Custom Packages
-        run: |
-          cd ./wrt/feeds/
-
-          $GITHUB_WORKSPACE/Scripts/Packages.sh
 
       - name: Restore cache
         id: restore-cache
@@ -120,10 +120,10 @@ jobs:
           if [ "${{steps.restore-cache.outputs.cache-hit}}" != 'true' ]; then
             if [ "${{env.WRT_VERBOSE}}" == "true" ]; then
               make toolchain/install -j$(nproc) V=s 
-              make target/linux/{clean,compile} V=s
+              make target/linux/{clean,compile} -j$(nproc) V=s
             fi
             make toolchain/install -j$(nproc)
-            make target/linux/{clean,compile}
+            make target/linux/{clean,compile} -j$(nproc)
           fi
           
           make package/feeds/luci/luci-app-passwall/download
@@ -169,6 +169,8 @@ jobs:
           cd ./wrt/ && mkdir ./upload/
 
           cp -rf ./.config ./upload/Config_"$WRT_TARGET"_"$WRT_SOURCE".txt
+
+          ls -l ./bin/packages/x86_64/luci/
 
           for FILE in $(find ./bin/packages/ -type f -iname "*passwall*"); do
             echo $(basename $FILE)
