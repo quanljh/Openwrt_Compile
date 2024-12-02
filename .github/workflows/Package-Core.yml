@@ -127,8 +127,10 @@ jobs:
           
           if [ "${{env.WRT_VERBOSE}}" == "true" ]; then
             make package/feeds/luci/luci-app-passwall/compile -j$(nproc) V=s
+            make package/feeds/luci/luci-app-smartdns/compile -j$(nproc) V=s
           fi
           make package/feeds/luci/luci-app-passwall/compile -j$(nproc)
+          make package/feeds/luci/luci-app-smartdns/compile -j$(nproc)
 
       - name: Delete other build caches
         if: steps.restore-cache.outputs.cache-hit != 'true'
@@ -168,7 +170,7 @@ jobs:
 
           cp -rf ./.config ./upload/Config_"$WRT_TARGET"_"$WRT_SOURCE".txt
 
-          for FILE in $(find ./bin/packages/ -type f -iname "*passwall*"); do
+          for FILE in $(find ./bin/packages/ -type f -iname "*.ipk"); do
             echo $(basename $FILE)
             mv -f $FILE ./upload/
           done
