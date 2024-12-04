@@ -41,4 +41,3 @@ UPDATE_PASSWALL_CODE() {
 }
 
 UPDATE_PACKAGE "luci-app-passwall" "xiaorouji/openwrt-passwall" "main" "UPDATE_PASSWALL_CODE"
-UPDATE_PACKAGE "smartdns" "pymumu/smartdns" "master"

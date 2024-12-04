@@ -127,10 +127,8 @@ jobs:
           
           if [ "${{env.WRT_VERBOSE}}" == "true" ]; then
             make package/feeds/luci/luci-app-passwall/compile -j$(nproc) V=s
-            make package/feeds/luci/luci-app-smartdns/compile -j$(nproc) V=s
           fi
           make package/feeds/luci/luci-app-passwall/compile -j$(nproc)
-          make package/feeds/luci/luci-app-smartdns/compile -j$(nproc)
 
       - name: Delete other build caches
         if: steps.restore-cache.outputs.cache-hit != 'true'
