@@ -168,7 +168,7 @@ jobs:
 
           cp -rf ./.config ./upload/Config_"$WRT_TARGET"_"$WRT_SOURCE".txt
 
-          for FILE in $(find ./bin/packages/ -type f -iname "*.ipk"); do
+          for FILE in $(find ./bin/packages/ -type f -iname "*passwall*"); do
             echo $(basename $FILE)
             mv -f $FILE ./upload/
           done
