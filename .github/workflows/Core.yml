@@ -139,9 +139,11 @@ jobs:
 
       - name: Custom Packages
         run: |
-          cd ./wrt/feeds/
+          cd ./wrt/
+          $GITHUB_WORKSPACE/Scripts/packages.sh
 
-          $GITHUB_WORKSPACE/Scripts/Packages.sh
+          cd ./wrt/feeds/
+          $GITHUB_WORKSPACE/Scripts/luci-packages.sh
 
       - name: Custom Settings
         run: |

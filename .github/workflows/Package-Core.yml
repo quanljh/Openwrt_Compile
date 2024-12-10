@@ -93,9 +93,11 @@ jobs:
 
       - name: Custom Packages
         run: |
-          cd ./wrt/feeds/
+          cd ./wrt/
+          $GITHUB_WORKSPACE/Scripts/packages.sh
 
-          $GITHUB_WORKSPACE/Scripts/Packages.sh
+          cd ./wrt/feeds/
+          $GITHUB_WORKSPACE/Scripts/luci-packages.sh
 
       - name: Update configs
         run: |   
@@ -126,8 +128,10 @@ jobs:
           fi
           
           if [ "${{env.WRT_VERBOSE}}" == "true" ]; then
+            make package/smartdns/compile -j$(nproc) V=s
             make package/feeds/luci/luci-app-passwall/compile -j$(nproc) V=s
           fi
+          make package/smartdns/compile -j$(nproc)
           make package/feeds/luci/luci-app-passwall/compile -j$(nproc)
 
       - name: Delete other build caches
@@ -168,9 +172,11 @@ jobs:
 
           cp -rf ./.config ./upload/Config_"$WRT_TARGET"_"$WRT_SOURCE".txt
 
-          for FILE in $(find ./bin/packages/ -type f -iname "*passwall*"); do
-            echo $(basename $FILE)
-            mv -f $FILE ./upload/
+          for FILE in $(find ./bin/packages/ -type f -iname "*.pkg"); do
+            if [[ $(basename $FILE) == *"passwall"* ]] || [[ $(basename $FILE) == *"smartdns"* ]]; then
+              echo $(basename $FILE)
+              mv -f $FILE ./upload/
+            fi
           done
 
       - name: Release Firmware
