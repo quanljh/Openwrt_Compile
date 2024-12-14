@@ -201,7 +201,7 @@ jobs:
           done
 
       - name: Release Firmware
-        uses: softprops/action-gh-release@master
+        uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{env.WRT_TARGET}}_${{env.WRT_SOURCE}}
           files: ./wrt/upload/*.*
