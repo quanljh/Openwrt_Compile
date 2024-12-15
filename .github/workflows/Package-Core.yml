@@ -96,7 +96,7 @@ jobs:
           cd ./wrt/
           $GITHUB_WORKSPACE/Scripts/packages.sh
 
-          cd ./wrt/feeds/
+          cd ./feeds/
           $GITHUB_WORKSPACE/Scripts/luci-packages.sh
 
       - name: Update configs
