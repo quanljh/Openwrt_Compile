@@ -172,7 +172,7 @@ jobs:
 
           cp -rf ./.config ./upload/Config_"$WRT_TARGET"_"$WRT_SOURCE".txt
 
-          for FILE in $(find ./bin/packages/ -type f -iname "*.pkg"); do
+          for FILE in $(find ./bin/packages/ -type f -iname "*.ipk"); do
             if [[ $(basename $FILE) == *"passwall"* ]] || [[ $(basename $FILE) == *"smartdns"* ]]; then
               echo $(basename $FILE)
               mv -f $FILE ./upload/
