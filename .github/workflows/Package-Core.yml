@@ -127,14 +127,14 @@ jobs:
             make target/linux/{clean,compile} -j$(nproc)
           fi
           
+          VERBOSE_OPT=""
           if [ "${{env.WRT_VERBOSE}}" == "true" ]; then
-          make package/smartdns/compile -j$(nproc) V=s
-          make package/xray-core -j$(nproc) V=s
-            make package/feeds/luci/luci-app-passwall/compile -j$(nproc) V=s
+            VERBOSE_OPT="V=s"
           fi
-          make package/smartdns/compile -j$(nproc)
-          make package/xray-core -j$(nproc)
-          make package/feeds/luci/luci-app-passwall/compile -j$(nproc)
+          make download -j$(nproc) V=s $VERBOSE_OPT
+          make package/smartdns/compile -j$(nproc) $VERBOSE_OPT
+          make package/xray-core -j$(nproc) $VERBOSE_OPT
+          make package/feeds/luci/luci-app-passwall/compile -j$(nproc) $VERBOSE_OPT
 
       - name: Delete other build caches
         if: steps.restore-cache.outputs.cache-hit != 'true'
