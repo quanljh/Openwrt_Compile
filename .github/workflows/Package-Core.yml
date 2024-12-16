@@ -131,9 +131,8 @@ jobs:
           if [ "${{env.WRT_VERBOSE}}" == "true" ]; then
             VERBOSE_OPT="V=s"
           fi
-          make download -j$(nproc) V=s $VERBOSE_OPT
           make package/smartdns/compile -j$(nproc) $VERBOSE_OPT
-          make package/xray-core -j$(nproc) $VERBOSE_OPT
+          make package/xray-core/compile -j$(nproc) $VERBOSE_OPT
           make package/feeds/luci/luci-app-passwall/compile -j$(nproc) $VERBOSE_OPT
 
       - name: Delete other build caches
