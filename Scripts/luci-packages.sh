@@ -37,7 +37,11 @@ INSTALL_PACKAGE() {
 
 	local PKG_PATH="./packages/feeds/luci/"
 
-	git clone --depth=1 --single-branch --branch $PKG_BRANCH "https://github.com/$PKG_REPO.git" $PKG_PATH
+	git clone --depth=1 --single-branch --branch $PKG_BRANCH "https://github.com/$PKG_REPO.git"
+	
+	mv -f $REPO_NAME/$PKG_NAME $PKG_PATH
+
+	rm -rf $REPO_NAME
 
 	echo "Package $PKG_NAME is updated."
 
@@ -60,4 +64,4 @@ UPDATE_PASSWALL_CODE() {
 }
 
 UPDATE_PACKAGE "luci-app-passwall" "xiaorouji/openwrt-passwall" "main" "UPDATE_PASSWALL_CODE"
-INSTALL_PACKAGE "luci-app-passwall2" "/xiaorouji/openwrt-passwall2" "main"
+INSTALL_PACKAGE "luci-app-passwall2" "xiaorouji/openwrt-passwall2" "main"
