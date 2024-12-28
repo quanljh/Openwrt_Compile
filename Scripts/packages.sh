@@ -19,8 +19,6 @@ update_geoview() {
 	mkdir $MAKEFILE_DST
 
 	curl -o $MAKEFILE_DST/Makefile $MAKEFILE_SRC
-
-	mv -f $MAKEFILE_SRC $MAKEFILE_DST
 }
 
 update_smartdns
