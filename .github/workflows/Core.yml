@@ -143,8 +143,6 @@ jobs:
         run: |
           cd ./wrt/
           $GITHUB_WORKSPACE/Scripts/packages.sh
-
-          cd ./feeds/
           $GITHUB_WORKSPACE/Scripts/luci-packages.sh
 
       - name: Custom Settings

@@ -5,7 +5,7 @@ UPDATE_PACKAGE() {
 	local POST_UPDATE_METHOD=$4
 	local REPO_NAME=$(echo $PKG_REPO | cut -d '/' -f 2)
 
-	local PKG_PATH=$(find ./luci/ ./packages/ -maxdepth 3 -type d -iname "*$PKG_NAME*" -prune)
+	local PKG_PATH=$(find ./feeds/luci/ ./feeds/packages/ -maxdepth 3 -type d -iname "*$PKG_NAME*" -prune)
 
 	if [ -z "$PKG_PATH" ]; then
 		echo "Package path is not found."
