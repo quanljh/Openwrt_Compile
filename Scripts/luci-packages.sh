@@ -27,6 +27,25 @@ UPDATE_PACKAGE() {
 	fi
 }
 
+
+INSTALL_PACKAGE() {
+	local PKG_NAME=$1
+	local PKG_REPO=$2
+	local PKG_BRANCH=$3
+	local POST_UPDATE_METHOD=$4
+	local REPO_NAME=$(echo $PKG_REPO | cut -d '/' -f 2)
+
+	local PKG_PATH="./packages/feeds/luci/"
+
+	git clone --depth=1 --single-branch --branch $PKG_BRANCH "https://github.com/$PKG_REPO.git" $PKG_PATH
+
+	echo "Package $PKG_NAME is updated."
+
+	if [ -n "$POST_UPDATE_METHOD" ]; then
+		$POST_UPDATE_METHOD "$PKG_PATH"
+	fi
+}
+
 UPDATE_PASSWALL_CODE() {
 	local PKG_PATH=$1
 
@@ -40,4 +59,5 @@ UPDATE_PASSWALL_CODE() {
 	echo "Passwall code is updated."
 }
 
-UPDATE_PACKAGE "luci-app-passwall" "quanljh/openwrt-passwall" "main" "UPDATE_PASSWALL_CODE"
+UPDATE_PACKAGE "luci-app-passwall" "xiaorouji/openwrt-passwall" "main" "UPDATE_PASSWALL_CODE"
+INSTALL_PACKAGE "luci-app-passwall2" "/xiaorouji/openwrt-passwall2" "main"

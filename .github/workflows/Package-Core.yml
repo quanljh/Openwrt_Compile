@@ -136,6 +136,7 @@ jobs:
           make package/smartdns/compile -j$(nproc) $VERBOSE_OPT
           make package/xray-core/compile -j$(nproc) $VERBOSE_OPT
           make package/feeds/luci/luci-app-passwall/compile -j$(nproc) $VERBOSE_OPT
+          make package/feeds/luci/luci-app-passwall2/compile -j$(nproc) $VERBOSE_OPT
 
       - name: Delete other build caches
         if: steps.restore-cache.outputs.cache-hit != 'true'
