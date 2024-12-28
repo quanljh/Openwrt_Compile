@@ -35,7 +35,7 @@ INSTALL_PACKAGE() {
 	local POST_UPDATE_METHOD=$4
 	local REPO_NAME=$(echo $PKG_REPO | cut -d '/' -f 2)
 
-	local PKG_PATH="./packages/feeds/luci/"
+	local PKG_PATH="./package/feeds/luci/"
 
 	git clone --depth=1 --single-branch --branch $PKG_BRANCH "https://github.com/$PKG_REPO.git"
 	
