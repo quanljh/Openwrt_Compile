@@ -3,10 +3,6 @@ name: Immortal
 on:
   workflow_dispatch:
     inputs:
-      password:
-        description: "Password"
-        required: true
-        default: ""
       wrt_commit:
         description: "Optional specific commit to check out"
         required: false
@@ -23,7 +19,6 @@ jobs:
     name: ${{matrix.TARGET}}
     strategy:
       fail-fast: false
-      #max-parallel: 3
       matrix:
         TARGET: [Rockchip, x86]
 
@@ -33,6 +28,6 @@ jobs:
       WRT_URL: https://github.com/immortalwrt/immortalwrt.git
       WRT_BRANCH: openwrt-24.10
       WRT_IP: 192.168.2.1
-      WRT_PASSWORD: ${{ github.event.inputs.password }}
+      WRT_PASSWORD: admin
       WRT_COMMIT: ${{ github.event.inputs.wrt_commit }}
       WRT_VERBOSE: ${{ github.event.inputs.wrt_verbose }}

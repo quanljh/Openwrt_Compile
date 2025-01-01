@@ -6,11 +6,13 @@ on:
       wrt_commit:
         description: "Optional specific commit to check out"
         required: false
-        default: ""
+        default: "bae54687c709f20f0dc18cef033e0bad0159ea23"
       wrt_verbose:
         description: "Enable verbose output"
         required: false
         default: "false"
+  schedule:
+    - cron: "0 0 * * *"
 
 permissions: write-all
 
@@ -19,7 +21,6 @@ jobs:
     name: ${{matrix.TARGET}}
     strategy:
       fail-fast: false
-      #max-parallel: 3
       matrix:
         TARGET: [x86]
 
