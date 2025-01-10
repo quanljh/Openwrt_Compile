@@ -181,6 +181,23 @@ jobs:
             fi
           done
 
+      - name: Delete Previous Release
+        run: |
+          release_name="Packages_${{env.WRT_TARGET}}_${{env.WRT_SOURCE}}"
+          tag_name="Packages_${{env.WRT_TARGET}}_${{env.WRT_SOURCE}}"
+          # Check if release exists
+          if gh release view $release_name > /dev/null 2>&1; then
+            echo "Deleting existing release: $release_name"
+            gh release delete $release_name --yes
+          fi
+          # Delete the tag if it exists
+          if git ls-remote --tags origin | grep -q "refs/tags/$tag_name$"; then
+            echo "Deleting tag: $tag_name"
+            git push origin --delete $tag_name
+          fi
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Release Firmware
         uses: softprops/action-gh-release@v2
         with:
