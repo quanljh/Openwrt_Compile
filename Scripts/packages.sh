@@ -16,8 +16,6 @@ update_geoview() {
 	local MAKEFILE_SRC="https://raw.githubusercontent.com/xiaorouji/openwrt-passwall-packages/refs/heads/main/geoview/Makefile"
 	local MAKEFILE_DST="./package/feeds/packages/geoview"
 
-	mkdir $MAKEFILE_DST
-
 	curl -o $MAKEFILE_DST/Makefile $MAKEFILE_SRC
 }
 
