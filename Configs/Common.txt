@@ -15,8 +15,7 @@ CONFIG_PACKAGE_luci-app-passwall=y
 CONFIG_PACKAGE_luci-app-passwall_INCLUDE_Xray=y
 CONFIG_PACKAGE_luci-theme-argon=y
 
-CONFIG_PACKAGE_geoview=y
-CONFIG_PACKAGE_luci-app-passwall2=y
+CONFIG_PACKAGE_luci-app-daed=y
 
 # Wireguard
 CONFIG_PACKAGE_luci-proto-wireguard=y
