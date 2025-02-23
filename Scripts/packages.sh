@@ -13,7 +13,7 @@ update_xray() {
 }
 
 update_geoview() {
-	local MAKEFILE_SRC="https://raw.githubusercontent.com/xiaorouji/openwrt-passwall-packages/refs/heads/main/v2ray-geoview/Makefile"
+	local MAKEFILE_SRC="https://raw.githubusercontent.com/xiaorouji/openwrt-passwall-packages/refs/heads/main/geoview/Makefile"
 	local MAKEFILE_DST="./package/feeds/packages/geoview"
 
 	mkdir $MAKEFILE_DST
