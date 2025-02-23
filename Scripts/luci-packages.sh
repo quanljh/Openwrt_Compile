@@ -27,7 +27,7 @@ UPDATE_PACKAGE() {
 	fi
 }
 
-
+# If package does not exist in feeds, you can install it using this function.
 INSTALL_PACKAGE() {
 	local PKG_NAME=$1
 	local PKG_REPO=$2
@@ -65,3 +65,4 @@ UPDATE_PASSWALL_CODE() {
 
 UPDATE_PACKAGE "luci-app-passwall" "xiaorouji/openwrt-passwall" "main" "UPDATE_PASSWALL_CODE"
 INSTALL_PACKAGE "luci-app-passwall2" "xiaorouji/openwrt-passwall2" "main"
+UPDATE_PACKAGE "luci-app-daed" "QiuSimons/luci-app-daed" "master"

@@ -28,6 +28,6 @@ jobs:
     with:
       WRT_TARGET: ${{matrix.TARGET}}
       WRT_URL: https://github.com/immortalwrt/immortalwrt.git
-      WRT_BRANCH: openwrt-23.05
-      WRT_COMMIT: ${{ github.event_name == 'schedule' && 'bae54687c709f20f0dc18cef033e0bad0159ea23' || github.event.inputs.wrt_commit }}
+      WRT_BRANCH: openwrt-24.10
+      WRT_COMMIT: ${{ github.event_name == 'schedule' && '78213f3f7acb2a012cc555fdaad85231569c182d' || github.event.inputs.wrt_commit }}
       WRT_VERBOSE: ${{ github.event.inputs.wrt_verbose }}
