@@ -36,4 +36,4 @@ update_daed() {
 update_smartdns
 update_xray
 update_geoview
-update_dae
+#update_dae
