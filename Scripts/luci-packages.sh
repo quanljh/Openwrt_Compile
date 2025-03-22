@@ -65,5 +65,5 @@ UPDATE_PASSWALL_CODE() {
 
 UPDATE_PACKAGE "luci-app-passwall" "xiaorouji/openwrt-passwall" "main" "UPDATE_PASSWALL_CODE"
 INSTALL_PACKAGE "luci-app-passwall2" "xiaorouji/openwrt-passwall2" "main"
-UPDATE_PACKAGE "luci-app-daed" "QiuSimons/luci-app-daed" "master"
+#UPDATE_PACKAGE "luci-app-daed" "QiuSimons/luci-app-daed" "master"
 #INSTALL_PACKAGE "luci-app-simple-xray" "quanljh/luci-app-simple-xray" "main"
