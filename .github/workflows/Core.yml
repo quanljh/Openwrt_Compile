@@ -126,7 +126,7 @@ jobs:
         run: |
           cd ./wrt/
 
-          sed -i 's#https://github.com/immortalwrt/luci.git^c60cfb5754a72d1ec93041fb8ef69c05695b51f5#https://github.com/quanljh/luci.git^115420d9373dda0a47447f02e6f258f3fca18ee4#g' feeds.conf.default
+          sed -i 's#https://github.com/immortalwrt/luci.git^c60cfb5754a72d1ec93041fb8ef69c05695b51f5#https://github.com/quanljh/luci.git^1738a8cbcd039948c0dedc975ec91d86a663cc73#g' feeds.conf.default
 
           ./scripts/feeds update -a
           ./scripts/feeds install -a
