@@ -11,8 +11,8 @@ on:
         description: "Enable verbose output"
         required: false
         default: "false"
-  schedule:
-    - cron: "0 0 * * *"
+  # schedule:
+  #   - cron: "0 0 * * *"
 
 permissions: write-all
 
